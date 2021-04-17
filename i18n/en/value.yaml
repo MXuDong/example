@@ -1,0 +1,18 @@
+# ========== The all info output
+
+# The struct of i18n :
+# First scope is value scope
+# The second scope is value type
+# the last scope is key-value mapper, the value is i18n value
+
+# the project info
+project:
+  base_info:
+    author: "XuDong.Meng"
+
+# the program run time info
+program:
+  life_cyle:
+    start: "Process start"
+    stop: "Process stop"
+    exit: "Process exit, cause: %v"
