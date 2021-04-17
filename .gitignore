@@ -1,0 +1,8 @@
+# Go product
+*.exe
+*.dll
+
+# ideas
+.idea/
+*.iml
+
