@@ -2,6 +2,7 @@ package config
 
 // define the config here
 const (
+	// I18n value
 	// ============================== server mods: run, debug
 	ServerMod_Debug = iota // debug mod
 	ServerMod_Run          // run mod
