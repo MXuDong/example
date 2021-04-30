@@ -1,19 +1,5 @@
 package config
 
-// define the config here
-const (
-	// ============================== server mods: run, debug
-	ServerMod_Debug = iota // debug mod
-	ServerMod_Run          // run mod
-	// ============================== docker mods: image, disable
-	DockerMod_Disable = iota // run common
-	DockerMod_Image          // run as image
-	// ============================== kubernetes mods: in-cluster, out-cluster, disable
-	KubernetesMod_Disable    = iota // disable kubernetes
-	KubernetesMod_InCluster         // the program run as a pod in the kubernetes cluster
-	KubernetesMod_OutCluster        // the program run out of kubernetes
-)
-
 // default values
 const (
 	DefaultServerPort    = ":3000"               // default gin server port is 3000
@@ -22,6 +8,7 @@ const (
 	DefaultKubernetesMod = KubernetesMod_Disable // default kubernetes mod is KubernetesMod_Disable
 )
 
+// config define all info for project
 type config struct {
 	ServerConfig     ServerConfig     `json:"server_config"`     // the server config
 	KubernetesConfig KubernetesConfig `json:"kubernetes_config"` // the kubernetes config
