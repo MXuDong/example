@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.io/MXuDong/example/config"
 	"github.io/MXuDong/example/internal/model"
 	"github.io/MXuDong/example/pkg/util/ctr"
 )
@@ -17,5 +18,5 @@ func HelloHandler(ctx *gin.Context) {
 // ConfigHandler will return application run time config value.
 // The config will auto convert to json.
 func ConfigHandler(ctx *gin.Context) {
-	// TODO set response
+	ctr.SuccessSingleObject(ctx, config.Config)
 }

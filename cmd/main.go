@@ -1,5 +1,7 @@
 package main
 
+import server "github.io/MXuDong/example/internal"
+
 // ====================
 // @author: MXuDong
 // project for:
@@ -11,5 +13,5 @@ package main
 
 // main function, the application run here
 func main() {
-
+	server.Run()
 }
