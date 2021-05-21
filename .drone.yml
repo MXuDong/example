@@ -15,7 +15,7 @@ steps:
       GOPROXY: https://goproxy.io
       GO111MODULE: on
     commands:
-      - make drone-build
+      - go test ./...
 
   # for daocloud harbor
   - name: for harbor - dao cloud
