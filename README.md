@@ -1,5 +1,7 @@
 # The example project for mock
 
+[![Build Status](http://drone.daocloud.cn/api/badges/xudong.meng/example/status.svg)](http://drone.daocloud.cn/xudong.meng/example)
+
 The project for mock the product application in test environment.
 
 For mock the application run in the product, like `http/bin`.
