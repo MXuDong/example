@@ -11,6 +11,7 @@ import (
 // If input is h://www.example.com, it will return false, http://www.example.com
 // The check flag is '://'
 // But if input is wrong, can't parse to http protocol, return false and ""
+// Todo ?should add error with return?
 func GetHttpUrl(url string) (bool, string) {
 	urls := strings.Split(url, constant.RequestUrlProtocolFlag)
 	lens := len(urls)
