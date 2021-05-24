@@ -12,4 +12,24 @@ const (
 	KubernetesMod_Disable    = iota // disable kubernetes
 	KubernetesMod_InCluster         // the program run as a pod in the kubernetes cluster
 	KubernetesMod_OutCluster        // the program run out of kubernetes
+
+	// System ====================== System Constant
+
+	// inner invoke response type
+	InnerInvokeResponseType_Value   = "value"
+	InnerInvokeResponseType_Copy    = "copy"
+	InnerInvokeResponseType_Package = "package" // is default type
+)
+
+const (
+	_ = ServerMod_Debug
+	_ = ServerMod_Run
+	_ = DockerMod_Disable
+	_ = DockerMod_Image
+	_ = KubernetesMod_Disable
+	_ = KubernetesMod_InCluster
+	_ = KubernetesMod_OutCluster
+	_ = InnerInvokeResponseType_Value
+	_ = InnerInvokeResponseType_Copy
+	_ = InnerInvokeResponseType_Package
 )

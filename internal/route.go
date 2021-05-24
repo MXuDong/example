@@ -13,6 +13,11 @@ func Route(r *gin.Engine) {
 		BaseGroup.GET("/hello", server.HelloHandler)   // hello handler
 		BaseGroup.GET("/config", server.ConfigHandler) // get the application runtime config
 	}
+	// ========================== invoke inner
+	InnerGroup := r.Group("/inner")
+	{
+		InnerGroup.POST("/post", server.TracePost)
+	}
 }
 
 func Run() {
