@@ -1,6 +1,9 @@
 package main
 
-import server "github.io/MXuDong/example/internal"
+import (
+	"github.com/sirupsen/logrus"
+	"github.io/MXuDong/example/internal/server"
+)
 
 // ====================
 // @author: MXuDong
@@ -13,5 +16,11 @@ import server "github.io/MXuDong/example/internal"
 
 // main function, the application run here
 func main() {
+	go func() {
+		err := server.TcpServerStart()
+		if err != nil {
+			logrus.Error(err)
+		}
+	}()
 	server.Run()
 }

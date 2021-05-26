@@ -1,24 +1,35 @@
 package config
 
+import "github.io/MXuDong/example/pkg/constant"
+
 // default values
 const (
-	DefaultServerPort    = ":3000"               // default gin server port is 3000
-	DefaultServerMod     = ServerMod_Debug       // default server mod is ServerMod_Debug
+	DefaultServerPort    = ":3000"               // default gin controller port is 3000
+	DefaultServerMod     = ServerMod_Debug       // default controller mod is ServerMod_Debug
 	DefaultDockerMod     = DockerMod_Disable     // default docker mod is DockerMod_Disable
 	DefaultKubernetesMod = KubernetesMod_Disable // default kubernetes mod is KubernetesMod_Disable
 )
 
 // config define all info for project
 type config struct {
-	ServerConfig     ServerConfig     `json:"server_config"`     // the server config
+	ServerConfig     ServerConfig     `json:"server_config"`     // the controller config
 	KubernetesConfig KubernetesConfig `json:"kubernetes_config"` // the kubernetes config
 	DockerConfig     DockerConfig     `json:"docker_config"`     // the docker config
 }
 
 // ServerConfig define the program behavior, suck like port, mod
 type ServerConfig struct {
-	Port string `json:"run_port"` // the server run port
-	Mod  int    `json:"run_mod"`  // the server run mod
+	Port string `json:"run_port"` // the controller run port
+	Mod  int    `json:"run_mod"`  // the controller run mod
+
+	EnableTcpServer bool   `json:"enable_tcp_server"` // if true, enable the tcp server
+	TcpServerPort   int    `json:"tcp_server_port"`   // if EnableTcpServer is true, tcp will try listen this port
+	TcpNetWork      string `json:"tcp_net_work"`      // tcp's net work, support tcp, tcp4, tcp6, unix and unixpacket
+	TcpAddress      string `json:"tcp_address"`       // tcp's address
+	MaxHandlerCount int    `json:"max_handler_count"` // max handler of tcp
+
+	EnableUdpServer bool `json:"enable_udp_server"` // if true, enable the udp server
+
 }
 
 // KubernetesConfig define the program run with kubernetes, use KubernetesMod to switch kubernetes mod with feature of kubernetes support
@@ -36,6 +47,16 @@ var Config = config{
 	ServerConfig: ServerConfig{
 		Mod:  DefaultServerMod,
 		Port: DefaultServerPort,
+
+		// tcp server
+		EnableTcpServer: true,
+		TcpNetWork:      constant.TcpProtocol,
+		TcpServerPort:   DefaultTcpPort,
+		TcpAddress:      DefaultTcpIpAddress,
+		MaxHandlerCount: DefaultTcpMaxHandlerCount,
+
+		// udp server
+		EnableUdpServer: false,
 	},
 	DockerConfig: DockerConfig{
 		Mod: DefaultDockerMod,

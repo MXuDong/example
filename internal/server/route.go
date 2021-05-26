@@ -3,20 +3,26 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"github.io/MXuDong/example/config"
-	"github.io/MXuDong/example/internal/server"
+	"github.io/MXuDong/example/internal/controller"
 )
 
 func Route(r *gin.Engine) {
 	// ========================== base controller here
 	BaseGroup := r.Group("/base")
 	{
-		BaseGroup.GET("/hello", server.HelloHandler)   // hello handler
-		BaseGroup.GET("/config", server.ConfigHandler) // get the application runtime config
+		BaseGroup.GET("/hello", controller.HelloHandler)   // hello handler
+		BaseGroup.GET("/config", controller.ConfigHandler) // get the application runtime config
 	}
 	// ========================== invoke inner
 	InnerGroup := r.Group("/inner")
 	{
-		InnerGroup.POST("/post", server.TracePost)
+		InnerGroup.POST("/post", controller.TracePost)
+	}
+
+	// ========================== Protocol mock
+	ProtocolMockGroup := r.Group("/protocol")
+	{
+		ProtocolMockGroup.POST("/tcp", controller.MockTcpRequest)
 	}
 }
 

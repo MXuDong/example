@@ -2,9 +2,13 @@ package config
 
 // define the config constant here
 const (
-	// ============================== server mods: run, debug
+	// ============================== controller mods: run, debug
 	ServerMod_Debug = iota // debug mod
 	ServerMod_Run          // run mod
+	// tcp values
+	DefaultTcpPort            = 8000
+	DefaultTcpIpAddress       = "127.0.0.1"
+	DefaultTcpMaxHandlerCount = 10
 	// ============================== docker mods: image, disable
 	DockerMod_Disable = iota // run common
 	DockerMod_Image          // run as image
