@@ -2,12 +2,10 @@ package nets
 
 import (
 	"context"
-	"fmt"
 	"github.io/MXuDong/example/pkg/constant"
 	"golang.org/x/sync/semaphore"
 	"net"
 	"strings"
-	"time"
 )
 
 //Tcp util, for build a tcp controller or create tcp connect.
@@ -103,19 +101,23 @@ func NetTcpServer(netWork, address string) (*TcpServer, error) {
 	return &ts, err
 }
 
+// DefaultTcpHandler will handler tcp request, for every connecting, it will return input value as bytes.
+// If read the EOF, this handler will ignore, all of other error will be return and close the connect.
 func DefaultTcpHandler(conn net.Conn) error {
 	readBuf := make([]byte, 1024)
 	for {
-		_, err := conn.Read(readBuf)
+		count, err := conn.Read(readBuf)
 		if err != nil {
+			if err.Error() == "EOF" {
+				return nil
+			}
 			return err
 		}
 		if strings.Index(string(readBuf), "stop") == 1 {
 			// stop connect
-			conn.Write([]byte(fmt.Sprintf("From %v to %v : %v", conn.LocalAddr(), conn.RemoteAddr(), time.Now())))
 			break
 		} else {
-			conn.Write(readBuf)
+			_, _ = conn.Write(readBuf[:count])
 		}
 	}
 	return nil
