@@ -7,7 +7,7 @@ const (
 	ServerMod_Run          // run mod
 	// tcp values
 	DefaultTcpPort            = 8000
-	DefaultTcpIpAddress       = "127.0.0.1"
+	DefaultTcpIpAddress       = "0.0.0.0"
 	DefaultTcpMaxHandlerCount = 10
 	// ============================== docker mods: image, disable
 	DockerMod_Disable = iota // run common
