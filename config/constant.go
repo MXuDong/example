@@ -3,19 +3,19 @@ package config
 // define the config constant here
 const (
 	// ============================== controller mods: run, debug
-	ServerMod_Debug = iota // debug mod
-	ServerMod_Run          // run mod
+	ServerMod_Debug = 0 // debug mod
+	ServerMod_Run   = 1 // run mod
 	// tcp values
 	DefaultTcpPort            = 8000
 	DefaultTcpIpAddress       = "0.0.0.0"
 	DefaultTcpMaxHandlerCount = 10
 	// ============================== docker mods: image, disable
-	DockerMod_Disable = iota // run common
-	DockerMod_Image          // run as image
+	DockerMod_Disable = 0 // run common
+	DockerMod_Image   = 1 // run as image
 	// ============================== kubernetes mods: in-cluster, out-cluster, disable
-	KubernetesMod_Disable    = iota // disable kubernetes
-	KubernetesMod_InCluster         // the program run as a pod in the kubernetes cluster
-	KubernetesMod_OutCluster        // the program run out of kubernetes
+	KubernetesMod_Disable    = 0 // disable kubernetes
+	KubernetesMod_InCluster  = 1 // the program run as a pod in the kubernetes cluster
+	KubernetesMod_OutCluster = 2 // the program run out of kubernetes
 
 	// System ====================== System Constant
 

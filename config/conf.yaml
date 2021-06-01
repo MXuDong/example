@@ -1,0 +1,34 @@
+server_config:
+  # the server listen port: 3000
+  # default is 3000
+  run_port: 3000
+  # run_mod define the application mod, debug: 0, release: 1
+  # default is debug mod
+  run_mod: 0
+  # enable tcp server, or disable is false
+  # default is true
+  enable_tcp_server: true
+  # tcp server will listen this port and bind tcp protocol
+  # default is 8000
+  tcp_server_port: 8000
+  # tcp's net work, support tcp, tcp4, tcp6, unix and unixpacket
+  # default is tcp
+  tcp_net_work: tcp
+  # the server listen on.
+  # default is 0.0.0.0, it mean that tcp server listen any host.
+  tcp_address: 0.0.0.0
+  # max handler of tcp, default is 10
+  max_handler_count: 10
+
+# The kubernetes
+kubernetes_config:
+  # The kubernetes mod, the example application support some kubernetes feature,
+  # use this config, select what you want.
+  # Disable kubernetes feature : 0, In kubernetes cluster : 1, Out kubernetes : 2
+  # If not set, application will tru to auto check kubernetes environment.
+  kubernetes_mod: 0
+
+# The dockers
+docker_config:
+  # the docker mod, the value: disable: 0, image: 1, default is 0
+  docker_mod: 0
