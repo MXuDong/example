@@ -65,24 +65,27 @@ func (ts *TcpServer) Do(errHandler func(err error)) error {
 			return err
 		}
 
-		err = ts.handlerSemaphore.Acquire(context.Background(), 1)
-		if err != nil {
-			return err
-		}
 		go func() {
+			err = ts.handlerSemaphore.Acquire(context.Background(), 1)
+			defer ts.handlerSemaphore.Release(1)
+			if err != nil {
+				errHandler(err)
+				err = nil
+				return
+			}
 			err := ts.handlers(conn)
 			if err != nil {
 				errHandler(err)
 				err = nil // reset err
+				return
 			}
 
 			err = conn.Close()
 			if err != nil {
 				errHandler(err)
 				err = nil // reset err
+				return
 			}
-
-			ts.handlerSemaphore.Release(1)
 		}()
 	}
 }
