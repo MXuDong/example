@@ -1,7 +1,7 @@
 server_config:
   # the server listen port: 3000
-  # default is 3000
-  run_port: 3000
+  # default is :3000
+  run_port: ":3000"
   # run_mod define the application mod, debug: 0, release: 1
   # default is debug mod
   run_mod: 0
@@ -10,7 +10,7 @@ server_config:
   enable_tcp_server: true
   # tcp server will listen this port and bind tcp protocol
   # default is 8000
-  tcp_server_port: 8000
+#  tcp_server_port: 8000
   # tcp's net work, support tcp, tcp4, tcp6, unix and unixpacket
   # default is tcp
   tcp_net_work: tcp

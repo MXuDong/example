@@ -14,4 +14,4 @@ ENV GOPROXY https://goproxy.cn
 RUN go get -d -v ./...
 RUN go build -o ./app cmd/main.go
 
-CMD ["./app"]
+CMD ["./app -c ./config/conf.yaml"]

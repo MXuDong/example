@@ -1,8 +1,13 @@
 package main
 
 import (
+	"flag"
+	"github.com/mitchellh/mapstructure"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"github.io/MXuDong/example/config"
 	"github.io/MXuDong/example/internal/server"
+	"strings"
 )
 
 // ====================
@@ -16,6 +21,27 @@ import (
 
 // main function, the application run here
 func main() {
+
+	configPath := flag.String("c", "./config/conf.yaml", "配置文件路径")
+	flag.Parse()
+
+	viper.SetConfigType("yaml")
+	viper.SetConfigFile(*configPath)
+	viper.AutomaticEnv()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	if err := viper.ReadInConfig(); err != nil {
+		return
+	}
+	err := viper.Unmarshal(&config.Config, func(c *mapstructure.DecoderConfig) {
+		c.TagName = "json"
+	})
+	if err != nil {
+		logrus.Error(err)
+	}
+
+	c := config.Config
+	_ = c
+
 	go func() {
 		err := server.TcpServerStart()
 		if err != nil {
