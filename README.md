@@ -22,19 +22,19 @@ Already in build-on, for CI branch is develop.
 
 # Usage
 
-## Build and Run (binary)
+## Build and Run
 
-### Step
+### Source build
     pre-environment: golang support(v1.15+)
 1. Clone project to your environment.
 2. Use `go` to build binary-product.
 3. Run it.
 
-## Deployment on kubernetes
+### Deployment on kubernetes
 See the [deployment.yaml](./deployment.yaml).
 
-## Deployment with docker environment
-### Local build:
+### Deployment with docker environment
+#### Local build
 To build image:
 ```shell
 $ docker build -t example:v0.0.0 .
@@ -77,11 +77,11 @@ Make a post to create a tcp connection:
 }
 ```
 
-- connect_time: how long connect keep
-- remote_ip_address: target tcp server's ip address
-- remote_ip_port: port of target tcp server listen
-- send_byte_count: the tcp client will send body size to target tcp server
-- protocol: support tcp protocols: tcp, tcp4, tcp6, unix, unixpacket
+- `connect_time`: how long connect keep
+- `remote_ip_address`: target tcp server's ip address
+- `remote_ip_port`: port of target tcp server listen
+- `send_byte_count`: the tcp client will send body size to target tcp server
+- `protocol`: support tcp protocols: tcp, tcp4, tcp6, unix, unixpacket
 
 **RESPONSE-200**
 ```json
