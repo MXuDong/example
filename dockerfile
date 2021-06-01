@@ -1,7 +1,7 @@
 FROM golang:1.15
 
 # Author
-MAINTAINER Project:k8s-feature-test MXuDong <2941884109@qq.com>
+MAINTAINER Project:k8s-feature-test MXuDong <1586793553@qq.com>
 
 # Copy file
 WORKDIR /go/src/app
