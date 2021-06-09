@@ -9,6 +9,11 @@ const (
 	DefaultTcpPort            = 8000
 	DefaultTcpIpAddress       = "0.0.0.0"
 	DefaultTcpMaxHandlerCount = 10
+	// udp values
+	DefaultUdpPort             = 8001
+	DefaultUdpIpAddress        = "0.0.0.0"
+	DefaultUdpMaxHandlerCount  = 10
+	DefaultUdpReaderBufferSize = 4096
 	// ============================== docker mods: image, disable
 	DockerMod_Disable = 0 // run common
 	DockerMod_Image   = 1 // run as image

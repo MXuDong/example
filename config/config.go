@@ -22,14 +22,18 @@ type ServerConfig struct {
 	Port string `json:"run_port"` // the controller run port
 	Mod  int    `json:"run_mod"`  // the controller run mod
 
-	EnableTcpServer bool   `json:"enable_tcp_server"` // if true, enable the tcp server
-	TcpServerPort   int    `json:"tcp_server_port"`   // if EnableTcpServer is true, tcp will try listen this port
-	TcpNetWork      string `json:"tcp_net_work"`      // tcp's net work, support tcp, tcp4, tcp6, unix and unixpacket
-	TcpAddress      string `json:"tcp_address"`       // tcp's address
-	MaxHandlerCount int    `json:"max_handler_count"` // max handler of tcp
+	EnableTcpServer    bool   `json:"enable_tcp_server"`     // if true, enable the tcp server
+	TcpServerPort      int    `json:"tcp_server_port"`       // if EnableTcpServer is true, tcp will try listen this port
+	TcpNetWork         string `json:"tcp_net_work"`          // tcp's net work, support tcp, tcp4, tcp6, unix and unixpacket
+	TcpAddress         string `json:"tcp_address"`           // tcp's address
+	TcpMaxHandlerCount int    `json:"tcp_max_handler_count"` // max handler of tcp
 
-	EnableUdpServer bool `json:"enable_udp_server"` // if true, enable the udp server
-
+	EnableUdpServer    bool   `json:"enable_udp_server"` // if true, enable the udp server
+	UdpServerPort      int    `json:"udp_server_port"`
+	UdpNetWork         string `json:"udp_net_work"`
+	UdpAddress         string `json:"udp_address"`
+	UdpMaxHandlerCount int    `json:"udp_max_handler_count"`
+	UdpReadBuffer      int    `json:"udp_read_buffer"`
 }
 
 // KubernetesConfig define the program run with kubernetes, use KubernetesMod to switch kubernetes mod with feature of kubernetes support
@@ -49,14 +53,19 @@ var Config = config{
 		Port: DefaultServerPort,
 
 		// tcp server
-		EnableTcpServer: true,
-		TcpNetWork:      constant.TcpProtocol,
-		TcpServerPort:   DefaultTcpPort,
-		TcpAddress:      DefaultTcpIpAddress,
-		MaxHandlerCount: DefaultTcpMaxHandlerCount,
+		EnableTcpServer:    true,
+		TcpNetWork:         constant.TcpProtocol,
+		TcpServerPort:      DefaultTcpPort,
+		TcpAddress:         DefaultTcpIpAddress,
+		TcpMaxHandlerCount: DefaultTcpMaxHandlerCount,
 
 		// udp server
-		EnableUdpServer: false,
+		EnableUdpServer:    true,
+		UdpServerPort:      DefaultUdpPort,
+		UdpNetWork:         constant.UdpProtocol,
+		UdpAddress:         DefaultUdpIpAddress,
+		UdpMaxHandlerCount: DefaultUdpMaxHandlerCount,
+		UdpReadBuffer:      DefaultUdpReaderBufferSize,
 	},
 	DockerConfig: DockerConfig{
 		Mod: DefaultDockerMod,
