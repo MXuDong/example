@@ -14,7 +14,7 @@ Already in build-on, for CI branch is develop.
 # Feature
 
 * Support the Docker environment
-* Support the Kubernetes environment
+* [Support the Kubernetes environment](./doc/Kubernetes-Feature.md)
 * Support the Istio with Kubernetes environment
 * Support run directly on vm or pc.
 * Support protocol mock
