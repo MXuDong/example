@@ -29,6 +29,9 @@ func Route(r *gin.Engine) {
 	KubernetesFeatureGroup := r.Group("/kubernetes")
 	{
 		KubernetesFeatureGroup.GET("/config", controller.Config)
+		if config.Ctl.Config.KubernetesConfig.Enable() {
+			// do some thing
+		}
 	}
 }
 

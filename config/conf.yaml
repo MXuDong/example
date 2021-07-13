@@ -29,7 +29,8 @@ kubernetes_config:
   # In of k8s : 2,
   # Out of k8s: 3
   # If not set, application will try to auto check kubernetes environment.
-  kubernetes_mod: 1
+  kubernetes_mod: 3
+  config: /Users/mengxudong/.kube/config
 
 # The dockers
 docker_config:

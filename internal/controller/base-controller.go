@@ -18,5 +18,5 @@ func HelloHandler(ctx *gin.Context) {
 // ConfigHandler will return application run time config value.
 // The config will auto convert to json.
 func ConfigHandler(ctx *gin.Context) {
-	ctr.SuccessSingleObject(ctx, config.Config)
+	ctr.SuccessSingleObject(ctx, config.Ctl.Config)
 }

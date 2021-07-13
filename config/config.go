@@ -50,6 +50,11 @@ type KubernetesConfig struct {
 	Config string `json:"config"`
 }
 
+// Enable will return true when enable the kubernetes feature
+func (k *KubernetesConfig) Enable() bool {
+	return k.Mod != KubernetesMod_Disable
+}
+
 // DockerConfig define the program run with docker, use DockerMod to switch docker mod with feature of docker support
 type DockerConfig struct {
 	Mod int `json:"docker_mod"` // the docker mod, the value: DockerMod_Disable, DockerMod_Image
