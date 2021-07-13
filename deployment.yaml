@@ -25,6 +25,24 @@ spec:
     app: example
   type: ClusterIP
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: example
+    service: example
+  name: example-np
+  namespace: example
+spec:
+  ports:
+    - name: http-gin-np
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: example
+  type: NodePort
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -46,11 +64,74 @@ spec:
         version: v1
     spec:
       containers:
-        - image: harbor.daocloud.cn/xudong.meng/example:drone-test-7
-          imagePullPolicy: IfNotPresent
+        - image: mxudong/example:latest
+          imagePullPolicy: Always
           name: example
           ports:
             - containerPort: 3000
               protocol: TCP
             - containerPort: 8000
               protocol: TCP
+          volumeMounts:
+            - mountPath: /app/config/
+              name: config-volume
+          command: ["./app -c /app/config/conf.yaml"]
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: example-cm
+            items:
+              - key: config
+                path: conf.yaml
+          name: config-volume
+---
+apiVersion: v1
+data:
+  config: |-
+    server_config:
+      # the server listen port: 3000
+      # default is :3000
+      run_port: ":3000"
+      # run_mod define the application mod, debug: 0, release: 1
+      # default is debug mod
+      run_mod: 0
+      # enable tcp server, or disable is false
+      # default is true
+      enable_tcp_server: false
+      # tcp server will listen this port and bind tcp protocol
+      # default is 8000
+      #  tcp_server_port: 8000
+      # tcp net works, support tcp, tcp4, tcp6, unix and unixpacket
+      # default is tcp
+      tcp_net_work: tcp
+      # the server listen on.
+      # default is 0.0.0.0, it mean that tcp server listen any host.
+      tcp_address: 0.0.0.0
+      # max handler of tcp, default is 10
+      max_handler_count: 1
+
+    # The kubernetes
+    kubernetes_config:
+      # The kubernetes mod, the example application support some kubernetes feature,
+      # use this config, select what you want.
+      # Disable: 0,
+      # Auto Mode: 1,
+      # In of k8s : 2,
+      # Out of k8s: 3
+      # If not set, application will try to auto check kubernetes environment.
+      kubernetes_mod: 1
+      # the config define kubernetes config file, if empty(not set value), try open ${home}/.kube/config
+      # if not has ${home}, set now workdir to search config
+    #  config:
+
+    # The dockers
+    docker_config:
+      # the docker mod, the value: disable: 0, image: 1, default is 0
+      docker_mod: 0
+
+    program_log_config:
+      log_level: trace
+kind: ConfigMap
+metadata:
+  name: example-cm
+  namespace: example
