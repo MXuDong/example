@@ -8,7 +8,7 @@ import (
 // SuccessEmpty will set response code with 204, and without any content
 // Is the common func to return directly for gin handler
 func SuccessEmpty(c *gin.Context) {
-	c.JSON(http.StatusNoContent, nil)
+	SuccessWithCode(c, http.StatusNoContent, nil)
 }
 
 // SuccessSingleObject will set response code with 200, and set content from target object to json.
@@ -19,5 +19,14 @@ func SuccessSingleObject(c *gin.Context, obj interface{}) {
 		return
 	}
 
-	c.JSON(http.StatusOK, obj)
+	SuccessWithCode(c, http.StatusOK, obj)
+}
+
+func SuccessWithCode(c *gin.Context, code int, obj interface{}) {
+	c.JSON(code, obj)
+}
+
+func Error(c *gin.Context, err error) {
+	_ = c.Error(err)
+	return
 }

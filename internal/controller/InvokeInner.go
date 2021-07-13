@@ -6,6 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.io/MXuDong/example/config"
 	"github.io/MXuDong/example/internal/model"
+	"github.io/MXuDong/example/pkg/util/ctr"
 	"github.io/MXuDong/example/pkg/util/nets"
 	"github.io/MXuDong/example/pkg/util/random"
 	"io/ioutil"
@@ -35,11 +36,12 @@ func TracePost(ctx *gin.Context) {
 	if err != nil {
 		// BindJson is already abort with error
 		logrus.Warn(err)
+		ctr.Error(ctx, err)
 		return
 	}
 
 	if len(jsonObjectList) == 0 {
-		ctx.Status(204)
+		ctr.SuccessEmpty(ctx)
 		return
 	}
 	objects := jsonObjectList[1:]
@@ -131,7 +133,7 @@ func TracePost(ctx *gin.Context) {
 			Object:           responseBody,
 			Value:            "nothing",
 		}
-		ctx.JSON(code, resStruct)
+		ctr.SuccessWithCode(ctx, code, resStruct)
 	}
-	ctx.JSON(code, res)
+	ctr.SuccessWithCode(ctx, code, res)
 }

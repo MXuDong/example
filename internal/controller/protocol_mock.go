@@ -5,7 +5,9 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.io/MXuDong/example/internal/model"
 	"github.io/MXuDong/example/pkg/constant"
+	"github.io/MXuDong/example/pkg/util/ctr"
 	"net"
+	"net/http"
 	"time"
 )
 
@@ -23,7 +25,7 @@ func MockTcpRequest(ctx *gin.Context) {
 	tcpMockParam := model.TcpMockParam{}
 
 	if err := ctx.ShouldBindJSON(&tcpMockParam); err != nil {
-		ctx.Error(err)
+		ctr.Error(ctx, err)
 		return
 	}
 
@@ -35,7 +37,7 @@ func MockTcpRequest(ctx *gin.Context) {
 
 	if tcpMockParam.SendByteCount < 0 || tcpMockParam.SendByteCount > 1023 {
 		// tcp send byte count error
-		ctx.AbortWithStatus(400)
+		ctx.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
@@ -45,13 +47,13 @@ func MockTcpRequest(ctx *gin.Context) {
 
 	client, err := net.DialTimeout(tcpMockParam.Protocol, tcpMockParam.RemoteIpAddress+":"+tcpMockParam.RemoteIpPort, 2*time.Second)
 	if err != nil {
-		ctx.Error(err)
+		ctr.Error(ctx, err)
 		return
 	}
 	defer client.Close()
 
 	bs := make([]byte, tcpMockParam.SendByteCount)
-	readTotoalByte := []byte{}
+	readTotalByte := []byte{}
 	for i := 0; i < tcpMockParam.SendByteCount; i++ {
 		bs[i] = 1
 	}
@@ -77,7 +79,7 @@ func MockTcpRequest(ctx *gin.Context) {
 		for {
 			// read value
 			rc, err := client.Read(buff)
-			readTotoalByte = append(readTotoalByte, buff[:rc]...)
+			readTotalByte = append(readTotalByte, buff[:rc]...)
 			if err != nil {
 				logrus.Errorf("Tcp read error : %v", err)
 				err = nil
@@ -92,23 +94,23 @@ func MockTcpRequest(ctx *gin.Context) {
 	// close
 	_, err = client.Write([]byte("stop"))
 	if err != nil {
-		ctx.Error(err)
+		ctr.Error(ctx, err)
 		return
 	}
 	err = client.Close()
 	if err != nil {
-		ctx.Error(err)
+		ctr.Error(ctx, err)
 		return
 	}
 
 	returns := model.MockReturn{
 		InvokeTime:      startTime,
 		EndTime:         time.Now().Local(),
-		ValueByte:       readTotoalByte,
+		ValueByte:       readTotalByte,
 		RequestProtocol: tcpMockParam.Protocol,
-		ValueSize:       uint64(len(readTotoalByte)),
+		ValueSize:       uint64(len(readTotalByte)),
 		InvokingSetting: tcpMockParam,
 	}
 
-	ctx.JSON(200, returns)
+	ctr.SuccessSingleObject(ctx, returns)
 }
