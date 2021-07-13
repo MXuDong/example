@@ -24,6 +24,12 @@ func Route(r *gin.Engine) {
 	{
 		ProtocolMockGroup.POST("/tcp", controller.MockTcpRequest)
 	}
+
+	// ========================== Kubernetes feature
+	KubernetesFeatureGroup := r.Group("/kubernetes")
+	{
+		KubernetesFeatureGroup.GET("/config", controller.Config)
+	}
 }
 
 func Run() {

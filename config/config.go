@@ -12,9 +12,15 @@ const (
 
 // config define all info for project
 type config struct {
-	ServerConfig     ServerConfig     `json:"server_config"`     // the controller config
-	KubernetesConfig KubernetesConfig `json:"kubernetes_config"` // the kubernetes config
-	DockerConfig     DockerConfig     `json:"docker_config"`     // the docker config
+	ProgramLogConfig *ProgramLogConfig `json:"program_log_config"` // the log config
+	ServerConfig     *ServerConfig     `json:"server_config"`      // the controller config
+	KubernetesConfig *KubernetesConfig `json:"kubernetes_config"`  // the kubernetes config
+	DockerConfig     *DockerConfig     `json:"docker_config"`      // the docker config
+}
+
+// the program log config, the log can't change behavior of the server log
+type ProgramLogConfig struct {
+	LogLevel string `json:"log_level"` // the log level
 }
 
 // ServerConfig define the program behavior, suck like port, mod
@@ -34,7 +40,14 @@ type ServerConfig struct {
 
 // KubernetesConfig define the program run with kubernetes, use KubernetesMod to switch kubernetes mod with feature of kubernetes support
 type KubernetesConfig struct {
-	Mod int `json:"kubernetes_mod"` // the kubernetes mod, the values: KubernetesMod_Disable, KubernetesMod_InCluster, KubernetesMod_OutCluster
+	// the kubernetes mod, the values: KubernetesMod_Disable, KubernetesMod_InCluster, KubernetesMod_OutCluster
+	Mod int `json:"kubernetes_mod"`
+
+	// if the out-side of kubernetes cluster, it is the config path to kube-client config.
+	// if empty, set to home/.kube/config
+	// if Mod is disable(0), set to string 'DISABLE', if in-side, set to IN-SIDE(it is auto).
+	// if init fail, set to 'INIT
+	Config string `json:"config"`
 }
 
 // DockerConfig define the program run with docker, use DockerMod to switch docker mod with feature of docker support
@@ -44,7 +57,10 @@ type DockerConfig struct {
 
 // ============================== the config instance
 var Config = config{
-	ServerConfig: ServerConfig{
+	ProgramLogConfig: &ProgramLogConfig{
+		LogLevel: DefaultLogLevel,
+	},
+	ServerConfig: &ServerConfig{
 		Mod:  DefaultServerMod,
 		Port: DefaultServerPort,
 
@@ -58,10 +74,11 @@ var Config = config{
 		// udp server
 		EnableUdpServer: false,
 	},
-	DockerConfig: DockerConfig{
+	DockerConfig: &DockerConfig{
 		Mod: DefaultDockerMod,
 	},
-	KubernetesConfig: KubernetesConfig{
-		Mod: DefaultKubernetesMod,
+	KubernetesConfig: &KubernetesConfig{
+		Mod:    KubernetesMod_Auto,
+		Config: KubernetesConfig_Default,
 	},
 }

@@ -42,6 +42,8 @@ func main() {
 	c := config.Config
 	_ = c
 
+	preHandler()
+
 	go func() {
 		err := server.TcpServerStart()
 		if err != nil {
@@ -49,4 +51,9 @@ func main() {
 		}
 	}()
 	server.Run()
+}
+
+// deal with the config, the pre handler of the program
+func preHandler(){
+	_ = config.InitInnerValue()
 }
