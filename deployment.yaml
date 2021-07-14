@@ -75,7 +75,6 @@ spec:
           volumeMounts:
             - mountPath: /app/config/
               name: config-volume
-          command: ["./app -c /app/config/conf.yaml"]
       volumes:
         - configMap:
             defaultMode: 420

@@ -1,21 +1,21 @@
-FROM golang:1.15
+FROM golang:1.16-stretch
 
 # Author
 MAINTAINER Project:k8s-feature-test MXuDong <1586793553@qq.com>
 
 WORKDIR /app
 
-# Copy file
-WORKDIR /go/src/app
+ENV GO111MODULE=on
+ENV CGO_ENABLED=0
+ENV GOOS=linux
 
+# Copy file
 COPY . .
 
 ENV GOPROXY https://goproxy.cn
 # the application envs
 
 RUN go get -d -v ./...
-RUN go build -o /app cmd/main.go
-
-WORKDIR /app
+RUN go build -o app cmd/main.go
 
 CMD ["./app -c ./config/conf.yaml"]
