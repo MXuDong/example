@@ -30,7 +30,7 @@ func Route(r *gin.Engine) {
 	{
 		KubernetesFeatureGroup.GET("/config", controller.Config)
 		if config.Ctl.Config.KubernetesConfig.Enable() {
-			// do some thing
+			// set kubernetes route
 		}
 	}
 }

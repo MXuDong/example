@@ -48,6 +48,13 @@ type KubernetesConfig struct {
 	// if Mod is disable(0), set to string 'DISABLE', if in-side, set to IN-SIDE(it is auto).
 	// if init fail, set to 'INIT
 	Config string `json:"config"`
+
+	ControllerConfig KubernetesControllerConfig `json:"controller_config"`
+}
+
+// KubernetesControllerConfig define the controller's config for kubernetes, the controller is the resources controller
+type KubernetesControllerConfig struct{
+
 }
 
 // Enable will return true when enable the kubernetes feature

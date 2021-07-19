@@ -4,6 +4,8 @@
 
 The project for mock the product application in test environment.
 
+And for mocking application, this repo is the service entry.
+
 For mock the application run in the product, like `http/bin`.
 
 ## Status:
