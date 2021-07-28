@@ -2,11 +2,13 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/mitchellh/mapstructure"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.io/MXuDong/example/config"
 	"github.io/MXuDong/example/internal/server"
+	"os"
 	"strings"
 )
 
@@ -19,12 +21,13 @@ import (
 // Create at: 2021-04-30
 // ====================
 
+var ConfigPath = ""
+
 // main function, the application run here
 func main() {
 
 	configPath := flag.String("c", "./config/conf.yaml", "配置文件路径")
 	flag.Parse()
-
 	viper.SetConfigType("yaml")
 	viper.SetConfigFile(*configPath)
 	viper.AutomaticEnv()
@@ -54,6 +57,13 @@ func main() {
 }
 
 // deal with the config, the pre handler of the program
-func preHandler(){
+func preHandler() {
 	_ = config.InitInnerValue()
+}
+
+func init() {
+	envs := os.Environ()
+	for item := range envs {
+		fmt.Println(item)
+	}
 }
