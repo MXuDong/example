@@ -6,9 +6,10 @@ import (
 	"net/http"
 )
 
-// DefaultRequestHeader cloud be changed by config! // todo implement it
+// DefaultRequestHeader contain some common header key and value.
 var DefaultRequestHeader http.Header = http.Header{
-
+	"Accept":[]string{"application/json"}, // Accept: application/json
+	"Accept-Charset":[]string{"utf-8"}, // Accept-Charset: utf-8
 }
 
 type MockClient struct {
