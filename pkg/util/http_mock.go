@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 )
@@ -72,11 +71,8 @@ func (m *MockClient) Options(url string, header http.Header) (*http.Response, er
 // If the header is empty, it will set default header to it.
 func (m *MockClient) DoRequest(url, method string, header http.Header, body io.Reader) (*http.Response, error) {
 	r, err := http.NewRequest(method, url, body)
-	if err == nil {
+	if err != nil {
 		return nil, err
-	}
-	if r == nil {
-		return nil, fmt.Errorf("request struct init fail, and can't patch any error")
 	}
 	if header == nil {
 		header = DefaultRequestHeader
