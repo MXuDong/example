@@ -8,8 +8,8 @@ import (
 
 // DefaultRequestHeader contain some common header key and value.
 var DefaultRequestHeader http.Header = http.Header{
-	"Accept":[]string{"application/json"}, // Accept: application/json
-	"Accept-Charset":[]string{"utf-8"}, // Accept-Charset: utf-8
+	"Accept":         []string{"application/json"}, // Accept: application/json
+	"Accept-Charset": []string{"utf-8"},            // Accept-Charset: utf-8
 }
 
 type MockClient struct {
@@ -55,10 +55,11 @@ func (m *MockClient) Delete(url string, header http.Header) (*http.Response, err
 // todo implement the connect method of the http-request
 //func(m*MockClient)Connect(url string, head http.Header, body io.Reader)(*http.Response, error){}
 
-// todo implement the option method of the http-request
-//func (m *MockClient) Option(url string, header http.Header, body io.Reader) (*http.Response, error) {
-//	return m.DoRequest(url, http.MethodOptions, header, body)
-//}
+// Options is OPTIONS request, be used to pre-request.
+// Options method has no request-body, internal method is http.MethodOptions
+func (m *MockClient) Options(url string, header http.Header) (*http.Response, error) {
+	return m.DoRequest(url, http.MethodOptions, header, nil)
+}
 
 // todo implement the trace method of the http-request
 //func (m *MockClient) Trace(url string, header http.Header, body io.Reader) (*http.Response, error) {
@@ -74,7 +75,7 @@ func (m *MockClient) DoRequest(url, method string, header http.Header, body io.R
 	if err == nil {
 		return nil, err
 	}
-	if r == nil{
+	if r == nil {
 		return nil, fmt.Errorf("request struct init fail, and can't patch any error")
 	}
 	if header == nil {
