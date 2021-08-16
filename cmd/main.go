@@ -13,5 +13,9 @@ import "fmt"
 
 // main function, the application run here
 func main() {
+
+	a := []string{"test"}
+	fmt.Println(append(a, "test"))
+	fmt.Println(a)
 	fmt.Println("Hello Example")
 }
